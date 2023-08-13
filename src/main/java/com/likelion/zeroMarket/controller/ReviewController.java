@@ -6,6 +6,7 @@ import com.likelion.zeroMarket.domain.Store;
 import com.likelion.zeroMarket.dto.ReviewRequestDto;
 import com.likelion.zeroMarket.dto.ReviewSellDto;
 import com.likelion.zeroMarket.dto.SellCreateRequestDto;
+import com.likelion.zeroMarket.exception.DataNotFoundException;
 import com.likelion.zeroMarket.service.ProductService;
 import com.likelion.zeroMarket.service.ReviewService;
 import com.likelion.zeroMarket.service.SellService;
@@ -14,10 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -37,9 +35,27 @@ public class ReviewController {
     @GetMapping("/{userId}/{category}")
     public ResponseEntity<?> getReview(@PathVariable Long userId, @PathVariable String category){
         //TODO: 카테고리에 맞는 리뷰와 함께 판매완료된 상품들 보내줘야함
-        Store store=productService.findMyStore(userId);
-        List<ReviewRequestDto> reviewList=reviewService.getCategoryReview(store, category);
-        List<SellCreateRequestDto> sellList=sellService.findMySell(store);
-        return ResponseEntity.ok(ReviewSellDto.from(reviewList, sellList));
+        try {
+            Store store = productService.findMyStore(userId);
+            List<ReviewRequestDto> reviewList = reviewService.getCategoryReview(store, category);
+            List<SellCreateRequestDto> sellList = sellService.findMySell(store);
+            return ResponseEntity.ok(ReviewSellDto.from(reviewList, sellList));
+        }catch(DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Operation(summary = "리뷰 저장하기", description = "더미데이터 입력용")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @PostMapping("/{userId}")
+    public ResponseEntity<?> saveReview(@PathVariable Long userId,
+                                        @RequestBody ReviewRequestDto reviewDto){
+        try{
+            Store store=productService.findMyStore(userId);
+            reviewService.saveReview(store, reviewDto);
+            return ResponseEntity.ok().build();
+        }catch(DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

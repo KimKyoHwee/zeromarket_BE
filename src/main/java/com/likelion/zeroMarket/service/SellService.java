@@ -25,4 +25,5 @@ public class SellService {
         }
         return sellDtoList;
     }
+    //TODO: 팔린 물품 클릭하면 SellRepository에 등록되어야함
 }

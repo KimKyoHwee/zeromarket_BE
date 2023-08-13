@@ -20,17 +20,21 @@ public class StoreController {
     @Operation(summary = "내 가게 페이지", description = "로그인했을 때 반환된 userId로 유저의 가게 정보 가져오기")
     @ApiResponse(responseCode = "200", description = "가게 정보 불러오기 성공")
     @GetMapping("/{userId}")
-    public ResponseEntity<StoreInfoDto> getStoreInfo(@PathVariable Long userId){
-        try{
-            StoreInfoDto storeInfoDto= storeService.getStoreInfo(userId);
+    public ResponseEntity<StoreInfoDto> getStoreInfo(@PathVariable Long userId) {
+        try {
+            StoreInfoDto storeInfoDto = storeService.getStoreInfo(userId);
             return ResponseEntity.ok(storeInfoDto);
-        }catch(DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-
-
-
-
+    @Operation(summary = "가게 정보 수정하기")
+    @ApiResponse(responseCode = "200", description = "가게 정보 수정 완료")
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> changeStoreInfo(@PathVariable Long userId,
+                                             @RequestBody StoreInfoDto storeInfoDto) {
+        storeService.chaneStoreInfo(userId, storeInfoDto);
+        return ResponseEntity.ok().build();
+    }
 }

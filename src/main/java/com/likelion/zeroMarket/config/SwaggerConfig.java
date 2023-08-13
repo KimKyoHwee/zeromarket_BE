@@ -62,6 +62,15 @@ public class SwaggerConfig {  //swagger UI
                 .pathsToMatch("/sell/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi getMainApi(){
+        return GroupedOpenApi
+                .builder()
+                .group("main")
+                .pathsToMatch("/main/**")
+                .build();
+    }
     @Bean
     public OpenAPI getOpenApi(){
         return new OpenAPI().components(new Components())

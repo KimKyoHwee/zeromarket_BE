@@ -2,6 +2,7 @@ package com.likelion.zeroMarket.service;
 
 import com.likelion.zeroMarket.domain.Store;
 import com.likelion.zeroMarket.domain.User;
+import com.likelion.zeroMarket.dto.StoreCreateRequestDto;
 import com.likelion.zeroMarket.dto.StoreInfoDto;
 import com.likelion.zeroMarket.exception.DataNotFoundException;
 import com.likelion.zeroMarket.repository.StoreRepository;
@@ -25,5 +26,22 @@ public class StoreService {
             Store store=user.get().getStore();
             return StoreInfoDto.from(store);
         } else throw new DataNotFoundException("User not found");
+    }
+
+    public void chaneStoreInfo(Long userId, StoreInfoDto storeDto){
+        Optional<User> user=userRepository.findById(userId);
+        if(user.isPresent()){
+            Store store=user.get().getStore();
+            store.setName(storeDto.getName());
+            store.setPicture(storeDto.getPicture());
+            store.setExplanation(storeDto.getExplanation());
+            store.setLatitude(storeDto.getLatitude());
+            store.setLongitude(storeDto.getLongitude());
+            store.setBank(storeDto.getBank());
+            store.setAccount(storeDto.getAccount());
+            storeRepository.save(store);
+        }
+        else throw new DataNotFoundException("User not found");
+
     }
 }

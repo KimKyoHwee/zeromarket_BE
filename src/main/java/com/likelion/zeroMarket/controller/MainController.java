@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor  //final붙은놈 자동 주입
-@RequestMapping("/Main")
+@RequestMapping("/main")  //swagger때문에 임시로 Main달아놓음
 public class MainController {
     private final StoreRepository storeRepository;
     private final ProductRepository productRepository;

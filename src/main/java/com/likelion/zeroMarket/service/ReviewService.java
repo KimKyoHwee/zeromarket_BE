@@ -25,4 +25,9 @@ public class ReviewService {
         }
         return dtoList;
     }
+
+    public void saveReview(Store store, ReviewRequestDto reviewDto){
+        Review review=Review.from(reviewDto, store);
+        reviewRepository.save(review);
+    }
 }
