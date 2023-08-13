@@ -34,8 +34,10 @@ public class ProductService {
     //자기 가게에서 자기가 고른 물품 삭제
     public void deleteProduct(Long userId, Long productId){
         Store store=findMyStore(userId);
-        Product product=productRepository.findByIdAndStore(productId, store);
-        productRepository.delete(product);
+        Optional<Product> product=
+                Optional.ofNullable(productRepository.findByIdAndStore(productId, store));
+        if(product.isPresent()) productRepository.delete(product.get());
+        else throw new DataNotFoundException("Product not found");
     }
 
     public void saveProduct(Long userId, ProductCreateRequestDto productDto){ //가게에 물품등록
@@ -57,5 +59,22 @@ public class ProductService {
             return productRepository.findByStore(store);
         }
         else throw new DataNotFoundException("User not found");
+    }
+
+    public ProductCreateRequestDto findMyProduct(Store store, Long productId){  //물품 1개 id로 찾기
+        Optional<Product> product=
+                Optional.ofNullable(productRepository.findByIdAndStore(productId, store));
+        if(product.isPresent()) return ProductCreateRequestDto.from(product.get());
+        else throw new DataNotFoundException("Product not found");
+    }
+
+    public void updateProduct(Store store, Long productId, ProductCreateRequestDto productDto){
+        Product product;
+        Optional<Product> OptProduct=
+                Optional.ofNullable(productRepository.findByIdAndStore(productId, store));
+        if(OptProduct.isPresent()) product=OptProduct.get();
+        else throw new DataNotFoundException("Product not found");
+        product=Product.from(productDto);
+        productRepository.save(product);
     }
 }

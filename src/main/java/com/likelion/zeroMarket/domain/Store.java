@@ -23,6 +23,12 @@ public class Store {
     //JPA에서는 일대일 대응은 무조건 양방향이여야 됨 즉, 양쪽 엔티티에서 OneToOne 해줘야됨
     private User user;
 
+    @OneToMany(mappedBy = "store")
+    private final List<Review> reviews=new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    private final List<Sell> Sells=new ArrayList<>();
+
     // 자꾸 오류뜸 ㅠㅠ
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // 자동으로 증가하도록 설정
