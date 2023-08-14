@@ -16,9 +16,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)  //created 어노테이션 기능 활성화
 public class Sell {
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="sell_id")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)

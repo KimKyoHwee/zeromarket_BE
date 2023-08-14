@@ -8,7 +8,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     //User객체를 저장하는 리포지토리인데, PK가 String타입
 
-    Optional<User> findByIdAndNickname(String id, String nickname); //PW찾기용
+    Optional<User> findByIdsAndNickname(String id, String nickname); //PW찾기용
     //Optional 형태로 받아야 서비스에서 OrElseThrow 사용 가능
-    Optional<User> findByIdAndPassword(String id, String password); //로그인용
+    Optional<User> findByIdsAndPassword(String id, String password); //로그인용
+
 }

@@ -43,10 +43,11 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "비번찾기 성공"),
             @ApiResponse(responseCode = "500", description = "아이디나 계좌번호중 한개이상 틀림")
     })
-    @GetMapping("/{id}/{nickname}")  //비번찾기(아이디랑 닉네임으로)
-    public ResponseEntity<?> findPw(@PathVariable String id, @PathVariable String nickname){
+    @GetMapping("/{ids}/{nickname}")  //비번찾기(아이디랑 닉네임으로)
+    public ResponseEntity<?> findPw(@PathVariable("ids") String ids,
+                                    @PathVariable("nickname") String nickname){
         try{
-            User user=userService.getPassword(id, nickname);
+            User user=userService.getPassword(ids, nickname);
             System.out.println("password:"+user.getPassword());
             System.out.println(user.getPassword());
             return ResponseEntity.ok(user.getPassword());
@@ -61,12 +62,12 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "로그인 성공(회원ID 반환)"),
             @ApiResponse(responseCode="500", description = "로그인 실패. 아이디나 패스워드중 한개 오류")
     })
-    @PostMapping("/{id}/{password}")  //로그인하면 UserId(PK) 리턴
-    public ResponseEntity<Long> logIn(@PathVariable String id, @PathVariable String password){
+    @PostMapping("/{ids}/{password}")  //로그인하면 UserId(PK) 리턴
+    public ResponseEntity<Long> logIn(@PathVariable("ids") String ids,
+                                      @PathVariable("password") String password){
         try{
-            User user=userService.getUserId(id, password);
-            System.out.println("userId:"+user.getUserId());
-            return ResponseEntity.ok(user.getUserId());
+            User user=userService.getUserId(ids, password);
+            return ResponseEntity.ok(user.getId());
         }catch(DataNotFoundException e) {
             System.out.println("error");
             return ResponseEntity.notFound().build();

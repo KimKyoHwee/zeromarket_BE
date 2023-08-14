@@ -32,18 +32,18 @@ public class UserService {
         System.out.println("store = " + user.getStore().getName());
     }
 
-    public User getPassword(String id, String nickname){  //PW찾기
+    public User getPassword(String ids, String nickname){  //PW찾기
         /*
         Optional<User> user=this.userRepository.findById(id);
         if(user.isPresent()) return user.get();
         else throw new DataNotFoundException("question not found");
          아래가 제대로 된 Optional사용법. Optional은 일치하는 객체가 없을 때 orElseThrow한다.*/
-        return userRepository.findByIdAndNickname(id, nickname)
+        return userRepository.findByIdsAndNickname(ids, nickname)
                 .orElseThrow(()->new DataNotFoundException("일치하는 회원 정보가 없습니다."));
     }
 
-    public User getUserId(String id, String password){  //로그인
-        return userRepository.findByIdAndPassword(id, password)
+    public User getUserId(String ids, String password){  //로그인
+        return userRepository.findByIdsAndPassword(ids, password)
                 .orElseThrow(()->new DataNotFoundException("일치하는 회원 정보가 없습니다."));
     }
 }

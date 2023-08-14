@@ -33,7 +33,8 @@ public class ReviewController {
     @Operation(summary="리뷰보기")
     @ApiResponse(responseCode = "200", description = "리뷰 불러오기 성공")
     @GetMapping("/{userId}/{category}")
-    public ResponseEntity<?> getReview(@PathVariable Long userId, @PathVariable String category){
+    public ResponseEntity<?> getReview(@PathVariable("userId") Long userId,
+                                       @PathVariable("category") String category){
         //TODO: 카테고리에 맞는 리뷰와 함께 판매완료된 상품들 보내줘야함
         try {
             Store store = productService.findMyStore(userId);
@@ -48,7 +49,7 @@ public class ReviewController {
     @Operation(summary = "리뷰 저장하기", description = "더미데이터 입력용")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/{userId}")
-    public ResponseEntity<?> saveReview(@PathVariable Long userId,
+    public ResponseEntity<?> saveReview(@PathVariable("userId") Long userId,
                                         @RequestBody ReviewRequestDto reviewDto){
         try{
             Store store=productService.findMyStore(userId);

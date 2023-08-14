@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // 자동으로 증가하도록 설정
-    @Column
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="review_id")
     private Long id;
 
     @ManyToOne(targetEntity = Store.class, fetch = FetchType.LAZY)

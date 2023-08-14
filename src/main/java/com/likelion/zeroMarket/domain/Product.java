@@ -15,9 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="product_id")
     private Long id;
 
     @ManyToOne(targetEntity = Store.class, fetch = FetchType.LAZY)

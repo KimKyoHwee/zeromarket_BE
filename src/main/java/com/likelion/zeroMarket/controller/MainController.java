@@ -23,8 +23,8 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/{address}/{category}")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
-    public ResponseEntity<?> mainDisplay(@PathVariable String address,
-                                         @PathVariable String category){
+    public ResponseEntity<?> mainDisplay(@PathVariable("address") String address,
+                                         @PathVariable("category") String category){
     //와일드카드인 <?>를 붙임으로써 무슨 타입을 반환할지 지정하지 않는다.
         try{
             List<Product> productList=mainService.getProduct(address, category);
@@ -37,8 +37,8 @@ public class MainController {
     }
 
     @GetMapping("/{address}/{name}")  //상품명으로 검색(
-    public ResponseEntity<?> searchDisplay(@PathVariable String address,
-                                           @PathVariable String name){
+    public ResponseEntity<?> searchDisplay(@PathVariable("address") String address,
+                                           @PathVariable("name") String name){
         try{
             List<Product> productList=mainService.getSearchProduct(address,name);
             return ResponseEntity.ok(productList);

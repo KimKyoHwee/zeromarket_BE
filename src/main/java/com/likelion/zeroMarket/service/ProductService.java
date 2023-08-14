@@ -42,7 +42,9 @@ public class ProductService {
 
     public void saveProduct(Long userId, ProductCreateRequestDto productDto){ //가게에 물품등록
         //userId로 가게 찾고, 그 가게를 product 내에 저장해주자
+        System.out.println("userId = " + userId);
         Optional<User> user=userRepository.findById(userId);
+        System.out.println("userId = " + userId);
         if(user.isPresent()){
             Store store=user.get().getStore();
             Product product=Product.from(productDto);
@@ -69,12 +71,19 @@ public class ProductService {
     }
 
     public void updateProduct(Store store, Long productId, ProductCreateRequestDto productDto){
-        Product product;
         Optional<Product> OptProduct=
                 Optional.ofNullable(productRepository.findByIdAndStore(productId, store));
-        if(OptProduct.isPresent()) product=OptProduct.get();
+        if(OptProduct.isPresent()) {
+            Product product=OptProduct.get();
+            product.setCategory(productDto.getCategory());
+            product.setName(productDto.getName());
+            product.setStockQuantity(productDto.getStockQuantity());
+            product.setEndTime(productDto.getEndTime());
+            product.setCulPrice(productDto.getCulPrice());
+            product.setSalePrice(productDto.getSalePrice());
+            product.setPicture(productDto.getPicture());
+            productRepository.save(product);
+        }
         else throw new DataNotFoundException("Product not found");
-        product=Product.from(productDto);
-        productRepository.save(product);
     }
 }

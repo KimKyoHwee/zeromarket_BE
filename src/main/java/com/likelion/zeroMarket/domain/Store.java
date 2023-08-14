@@ -30,9 +30,8 @@ public class Store {
     private final List<Sell> Sells=new ArrayList<>();
 
     // 자꾸 오류뜸 ㅠㅠ
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // 자동으로 증가하도록 설정
-    @Column
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="store_id")
     private Long id;
 
     @Column

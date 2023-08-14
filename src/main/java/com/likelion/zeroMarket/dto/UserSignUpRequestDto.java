@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSignUpRequestDto {  //회원가입 DTO
-    private String id;
+    private String ids;
     private String password;
-//    private String bank;
-//    private String account;
     private String nickname;
 }
