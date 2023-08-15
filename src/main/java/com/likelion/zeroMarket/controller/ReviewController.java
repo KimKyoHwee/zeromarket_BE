@@ -6,6 +6,7 @@ import com.likelion.zeroMarket.domain.Store;
 import com.likelion.zeroMarket.dto.ReviewRequestDto;
 import com.likelion.zeroMarket.dto.ReviewSellDto;
 import com.likelion.zeroMarket.dto.SellCreateRequestDto;
+import com.likelion.zeroMarket.dto.SellReturnRequestDto;
 import com.likelion.zeroMarket.exception.DataNotFoundException;
 import com.likelion.zeroMarket.service.ProductService;
 import com.likelion.zeroMarket.service.ReviewService;
@@ -39,7 +40,7 @@ public class ReviewController {
         try {
             Store store = productService.findMyStore(userId);
             List<ReviewRequestDto> reviewList = reviewService.getCategoryReview(store, category);
-            List<SellCreateRequestDto> sellList = sellService.findMySell(store);
+            List<SellReturnRequestDto> sellList = sellService.findMySell(store);
             return ResponseEntity.ok(ReviewSellDto.from(reviewList, sellList));
         }catch(DataNotFoundException e) {
             return ResponseEntity.notFound().build();

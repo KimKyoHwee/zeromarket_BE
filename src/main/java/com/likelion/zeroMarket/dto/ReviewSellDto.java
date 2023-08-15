@@ -13,10 +13,10 @@ import java.util.List;
 @Builder
 public class ReviewSellDto {
     private List<ReviewRequestDto> reviewDtoList;
-    private List<SellCreateRequestDto> sellDtoList;
+    private List<SellReturnRequestDto> sellDtoList;
 
     public static ReviewSellDto from(List<ReviewRequestDto> reviewDtoList2,
-                                     List<SellCreateRequestDto> sellDtoList2){
+                                     List<SellReturnRequestDto> sellDtoList2){
         return ReviewSellDto.builder()
                 .reviewDtoList(reviewDtoList2)
                 .sellDtoList(sellDtoList2)

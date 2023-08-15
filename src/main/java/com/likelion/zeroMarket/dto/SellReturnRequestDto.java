@@ -6,21 +6,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SellCreateRequestDto {
+public class SellReturnRequestDto {
+    private Long id;
     private String name;
-    private String category;
     private int amount;
-    private String picture;
-    public static SellCreateRequestDto from(Sell sell){
-        return SellCreateRequestDto.builder()
+    private LocalDateTime sellTime;
+    private String category;
+    public static SellReturnRequestDto from(Sell sell){
+        return SellReturnRequestDto.builder()
+                .id(sell.getId())
                 .name(sell.getName())
-                .category(sell.getCategory())
                 .amount(sell.getAmount())
-                .picture(sell.getPicture())
+                .sellTime(sell.getSellTime())
+                .category(sell.getCategory())
                 .build();
     }
 }

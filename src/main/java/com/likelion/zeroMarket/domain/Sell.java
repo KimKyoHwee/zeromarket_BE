@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -35,7 +36,10 @@ public class Sell {
 
     @Column
     @CreatedDate
-    private LocalTime sellTime;
+    private LocalDateTime sellTime;
+
+    @Column
+    private String picture;
 
     public static Sell from(SellCreateRequestDto sellDto, Store requestStore){
         return Sell.builder()
@@ -43,6 +47,7 @@ public class Sell {
                 .name(sellDto.getName())
                 .category(sellDto.getCategory())
                 .amount(sellDto.getAmount())
+                .picture(sellDto.getPicture())
                 .build();
     }
 }
