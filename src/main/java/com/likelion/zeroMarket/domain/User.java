@@ -33,7 +33,10 @@ public class User {
     @Column
     private String nickname;  //~~동으로 쇼부
 
+    @Column
     private Double longitude;
+
+    @Column
     private Double latitude;
 
 
@@ -42,6 +45,8 @@ public class User {
                 .ids(userDto.getIds())
                 .password(userDto.getPassword())
                 .nickname(userDto.getNickname())
+                .longitude(userDto.getLongitude())
+                .latitude(userDto.getLatitude())
                 .build();
     }
 

@@ -11,4 +11,6 @@ public class UserSignUpRequestDto {  //회원가입 DTO
     private String ids;
     private String password;
     private String nickname;
+    private Double latitude;
+    private Double longitude;
 }
