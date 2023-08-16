@@ -31,7 +31,7 @@ public class MainService {
     }
 
     public List<StoreLocationDto> getStoreLocationList(String address, String category){
-        List<Store> storeList=storeRepository.findAllByAddressAndCategory(address, category);
+        List<Store> storeList=storeRepository.findAllByAddress(address);
         List<StoreLocationDto> dtoList=new ArrayList<>();
         for(Store store:storeList){
             dtoList.add(StoreLocationDto.from(store));
@@ -40,7 +40,7 @@ public class MainService {
     }
 
     public List<ProductCreateRequestDto> getProductList(String address, String category){
-        List<Store> storeList=storeRepository.findAllByAddressAndCategory(address, category);
+        List<Store> storeList=storeRepository.findAllByAddress(address);
         List<Product> productList=new ArrayList<>();
         for(Store store:storeList){
             productList.addAll(productRepository.findByStoreAndCategory(store, category));

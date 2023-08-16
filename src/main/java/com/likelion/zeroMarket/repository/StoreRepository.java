@@ -7,6 +7,5 @@ import java.util.List;
 
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
-    List<Store> findAllByAddressAndCategory(String address, String category);
     List<Store> findAllByAddress(String address);
 }
