@@ -14,8 +14,8 @@ public class StoreInfoDto {  //내 가게 정보에서 보여줄 가게정보DTO
     private String picture;
     private String name;
     private String explanation;
-    private Double latitude;
-    private Double longitude;
+//    private Double latitude;
+//    private Double longitude;
     private String bank;
     private String account;
     private String address;
@@ -26,8 +26,8 @@ public class StoreInfoDto {  //내 가게 정보에서 보여줄 가게정보DTO
                 .picture(store.getPicture())
                 .name(store.getName())
                 .explanation(store.getExplanation())
-                .latitude(store.getLatitude())
-                .longitude(store.getLongitude())
+//                .latitude(store.getLatitude())
+//                .longitude(store.getLongitude())
                 .bank(store.getBank())
                 .account(store.getAccount())
                 .address(store.getAddress())

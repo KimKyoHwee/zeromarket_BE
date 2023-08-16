@@ -12,15 +12,17 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StoreLocationDto {
     private String name;
-    private Double latitude;
-    private Double longitude;
+    private String address;
+//    private Double latitude;
+//    private Double longitude;
 
 
     public static StoreLocationDto from(Store store){
         return StoreLocationDto.builder()
                 .name(store.getName())
-                .latitude(store.getLatitude())
-                .longitude(store.getLongitude())
+                .address(store.getAddress())
+//                .latitude(store.getLatitude())
+//                .longitude(store.getLongitude())
                 .build();
     }
 }

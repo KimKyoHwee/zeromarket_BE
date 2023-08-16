@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -25,10 +27,15 @@ public class UserService {
     //회원가입
     public void signUp(UserSignUpRequestDto userDto, StoreCreateRequestDto storeDto){
         //이거 기능 구현 제대로 된건가..? 회원 정보 받고, 회원이 외래키로 가지고 있는 가게정보주입해주기
-
-        User user=User.from(userDto);  //유저 정보 만들고
-        userRepository.save(makeStore(user, storeDto));  //최종 유저 저장
-        System.out.println("store = " + user.getStore().getName());
+        String userIds=userDto.getIds();
+        Optional<User> OptUser=userRepository.findByIds(userIds);
+        if(OptUser.isPresent()) {
+            throw new DataNotFoundException("아이디가 겹칩니다!");
+        }
+        else {
+            User user = User.from(userDto);  //유저 정보 만들고
+            userRepository.save(makeStore(user, storeDto));  //최종 유저 저장
+        }
     }
 
     public User getPassword(String ids, String nickname){  //PW찾기

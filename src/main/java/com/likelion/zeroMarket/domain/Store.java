@@ -44,12 +44,12 @@ public class Store {
     private String explanation;
 
 
-    @Column
-    private Double latitude;  //위도
+//    @Column
+//    private Double latitude;  //위도
+//
+//    @Column
+//    private Double longitude;  //경도
 
-    @Column
-    private Double longitude;  //경도
-    
     @Column
     private String address;  //~~동
 
@@ -66,8 +66,8 @@ public class Store {
                 .picture(store.getPicture())
                 .name(store.getName())
                 .explanation(store.getExplanation())
-                .latitude(store.getLatitude())
-                .longitude(store.getLongitude())
+                //.latitude(store.getLatitude())
+                //.longitude(store.getLongitude())
                 .bank(store.getBank())
                 .account(store.getAccount())
                 .address(store.getAddress())

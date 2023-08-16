@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //Optional 형태로 받아야 서비스에서 OrElseThrow 사용 가능
     Optional<User> findByIdsAndPassword(String id, String password); //로그인용
 
+    Optional<User> findByIds(String ids);
+
 }

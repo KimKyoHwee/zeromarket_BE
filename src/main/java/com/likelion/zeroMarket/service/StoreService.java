@@ -35,8 +35,8 @@ public class StoreService {
             store.setName(storeDto.getName());
             store.setPicture(storeDto.getPicture());
             store.setExplanation(storeDto.getExplanation());
-            store.setLatitude(storeDto.getLatitude());
-            store.setLongitude(storeDto.getLongitude());
+//            store.setLatitude(storeDto.getLatitude());
+//            store.setLongitude(storeDto.getLongitude());
             store.setBank(storeDto.getBank());
             store.setAccount(storeDto.getAccount());
             storeRepository.save(store);
