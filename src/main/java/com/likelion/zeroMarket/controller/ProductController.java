@@ -24,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/product")
 @Tag(name="product", description = "물품 관련 api")
+@CrossOrigin("*")
 public class ProductController {
     private final ProductService productService;
 

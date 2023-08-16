@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/sell")
 @Tag(name="sell", description = "팔린 물품 관련 api")
+@CrossOrigin("*")
 public class SellController {
     private final SellService sellService;
     @Operation(summary = "팔린 물품 등록")

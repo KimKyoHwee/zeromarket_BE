@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/store")
 @Tag(name="store", description = "가게 관련 api")
+@CrossOrigin("*")
 public class StoreController {
     private final StoreService storeService;
 

@@ -11,10 +11,7 @@ import com.likelion.zeroMarket.repository.ProductRepository;
 import com.likelion.zeroMarket.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor  //final붙은놈 자동 주입
 @RequestMapping("/main")  //swagger때문에 임시로 Main달아놓음
+@CrossOrigin("*")
 public class MainController {
     private final StoreRepository storeRepository;
     private final ProductRepository productRepository;

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor  //final붙은놈 자동 주입
 @RequestMapping("/user")
 @Tag(name = "User", description = "가입하는 사용자 모델")
+@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
 

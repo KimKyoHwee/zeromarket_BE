@@ -26,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/review")
 @Tag(name="review", description = "가게 리뷰 관련 api")
+@CrossOrigin("*")
 public class ReviewController {
     private final ReviewService reviewService;
     private final ProductService productService;
