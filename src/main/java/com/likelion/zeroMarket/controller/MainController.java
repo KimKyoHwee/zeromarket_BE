@@ -1,6 +1,7 @@
 package com.likelion.zeroMarket.controller;
 
 import com.likelion.zeroMarket.domain.Store;
+import com.likelion.zeroMarket.domain.User;
 import com.likelion.zeroMarket.dto.MainStoreProductListDto;
 import com.likelion.zeroMarket.dto.ProductCreateRequestDto;
 import com.likelion.zeroMarket.dto.StoreLocationDto;
@@ -30,11 +31,19 @@ public class MainController {
                                          @PathVariable("category") String category){
     //와일드카드인 <?>를 붙임으로써 무슨 타입을 반환할지 지정하지 않는다.
         try{
-            List<StoreLocationDto> storeList=mainService.getStoreLocationList(address, category);
+            List<User> userList=mainService.getUserLocationList(address);
+            List<Store> storeList=new ArrayList<>();
+            for(User user:userList){
+                storeList.add(user.getStore());
+            }
+            List<StoreLocationDto> storeOptList=new ArrayList<>();
+            for(Store store:storeList){
+                storeOptList.add(StoreLocationDto.from(store));
+            }
             List<ProductCreateRequestDto> productList=mainService.getProductList(address, category);
             MainStoreProductListDto dtoList=new MainStoreProductListDto();
             dtoList.setProdctList(productList);
-            dtoList.setStoreList(storeList);
+            dtoList.setStoreList(storeOptList);
             //TODO: DTO 한개 파서 물품 리스트랑 동네 위도경도랑 같이 주기
             return ResponseEntity.ok(dtoList);
         }catch(DataNotFoundException e) {
