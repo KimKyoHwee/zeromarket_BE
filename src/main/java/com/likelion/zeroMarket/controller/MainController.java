@@ -2,9 +2,7 @@ package com.likelion.zeroMarket.controller;
 
 import com.likelion.zeroMarket.domain.Store;
 import com.likelion.zeroMarket.domain.User;
-import com.likelion.zeroMarket.dto.MainStoreProductListDto;
-import com.likelion.zeroMarket.dto.ProductCreateRequestDto;
-import com.likelion.zeroMarket.dto.StoreLocationDto;
+import com.likelion.zeroMarket.dto.*;
 import com.likelion.zeroMarket.service.MainService;
 import com.likelion.zeroMarket.exception.DataNotFoundException;
 import com.likelion.zeroMarket.domain.Product;
@@ -26,9 +24,10 @@ public class MainController {
     private final ProductRepository productRepository;
     private final MainService mainService;
 
-    @GetMapping("/{address}/{category}")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
-    public ResponseEntity<?> mainDisplay(@PathVariable("address") String address,
-                                         @PathVariable("category") String category){
+    @GetMapping("/list")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
+    public ResponseEntity<?> mainDisplay(@RequestBody MainListDto mainListDto){
+        String address=mainListDto.getAddress();
+        String category=mainListDto.getCategory();
     //와일드카드인 <?>를 붙임으로써 무슨 타입을 반환할지 지정하지 않는다.
         try{
             List<User> userList=mainService.getUserLocationList(address);
@@ -52,9 +51,10 @@ public class MainController {
         }
     }
 
-    @GetMapping("/{address}/{name}")  //상품명으로 검색(
-    public ResponseEntity<List<ProductCreateRequestDto>> searchDisplay(@PathVariable("address") String address,
-                                           @PathVariable("name") String name){
+    @GetMapping("/search")  //상품명으로 검색(
+    public ResponseEntity<List<ProductCreateRequestDto>> searchDisplay(@RequestBody MainSearchDto mainSearchDto){
+        String address=mainSearchDto.getAddress();
+        String name=mainSearchDto.getName();
         try{
             List<Product> productList=mainService.getSearchProduct(address,name);
             List<ProductCreateRequestDto> DtoList=new ArrayList<>();
