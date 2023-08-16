@@ -14,6 +14,7 @@ public class StoreCreateRequestDto {  //가게 등록 DTO
     private Double latitude;
     private Double longitude;
     private String address;  // "~~동"
+    private String detailAddress;
     private String bank;
     private String account;
 }

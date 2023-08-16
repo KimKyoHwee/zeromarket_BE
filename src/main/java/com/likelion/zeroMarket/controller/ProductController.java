@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,7 +49,7 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "물품 조회 성공!")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getProductList(@PathVariable("userId") Long userId){
-        List<Product> productList=productService.findMyProductList(userId);
+            List<Product> productList=productService.findMyProductList(userId);
         List<MyProductListDto> productDtoList=new ArrayList<>();
         for(Product product:productList){
             productDtoList.add(MyProductListDto.from(product));
@@ -59,7 +60,7 @@ public class ProductController {
     @Operation(summary="클릭한 특정 물품 보여주기", description = "이건 물품id 보내주셔야돼요!")
     @ApiResponse(responseCode = "200", description = "물품 조회 성공!")
     @GetMapping("/{userId}/{productId}")
-    public ResponseEntity<?> getSpecificProduct(@PathVariable("userId") Long userId,
+    public ResponseEntity<ProductCreateRequestDto> getSpecificProduct(@PathVariable("userId") Long userId,
                                                 @PathVariable("productId") Long productId){
         Store store=productService.findMyStore(userId);
         return ResponseEntity.ok(productService.findMyProduct(store, productId));

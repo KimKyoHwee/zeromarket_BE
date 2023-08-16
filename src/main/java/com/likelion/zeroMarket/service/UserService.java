@@ -27,7 +27,6 @@ public class UserService {
         //이거 기능 구현 제대로 된건가..? 회원 정보 받고, 회원이 외래키로 가지고 있는 가게정보주입해주기
 
         User user=User.from(userDto);  //유저 정보 만들고
-        System.out.println("username = " + user.getNickname());
         userRepository.save(makeStore(user, storeDto));  //최종 유저 저장
         System.out.println("store = " + user.getStore().getName());
     }

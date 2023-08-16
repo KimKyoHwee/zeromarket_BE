@@ -2,6 +2,7 @@ package com.likelion.zeroMarket.controller;
 
 import com.likelion.zeroMarket.domain.User;
 import com.likelion.zeroMarket.dto.StoreCreateRequestDto;
+import com.likelion.zeroMarket.dto.UserLogInDto;
 import com.likelion.zeroMarket.dto.UserSignUpRequestDto;
 import com.likelion.zeroMarket.dto.UserStoreDto;
 import com.likelion.zeroMarket.exception.DataNotFoundException;
@@ -32,7 +33,6 @@ public class UserController {
         //ResponseEntity는 상태 전달 엔티티, RequestBody는 한개밖에 못써서 여러개 받으려면 따로 클래스 지정
         UserSignUpRequestDto userDto=userStoreDto.getUserSignUpRequestDto();
         StoreCreateRequestDto storeDto=userStoreDto.getStoreCreateRequestDto();
-        System.out.println("userDto의 name = " + userDto.getNickname());
         //형님 여기서 받는 2개 Dto 모두 필드들이 NULL로 넘어와..
         userService.signUp(userDto, storeDto);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -63,11 +63,11 @@ public class UserController {
             @ApiResponse(responseCode="500", description = "로그인 실패. 아이디나 패스워드중 한개 오류")
     })
     @PostMapping("/{ids}/{password}")  //로그인하면 UserId(PK) 리턴
-    public ResponseEntity<Long> logIn(@PathVariable("ids") String ids,
+    public ResponseEntity<UserLogInDto> logIn(@PathVariable("ids") String ids,
                                       @PathVariable("password") String password){
         try{
             User user=userService.getUserId(ids, password);
-            return ResponseEntity.ok(user.getId());
+            return ResponseEntity.ok(UserLogInDto.from(user));
         }catch(DataNotFoundException e) {
             System.out.println("error");
             return ResponseEntity.notFound().build();

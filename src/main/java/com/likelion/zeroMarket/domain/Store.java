@@ -54,6 +54,9 @@ public class Store {
     private String address;  //~~동
 
     @Column
+    private String detailAddress;
+
+    @Column
     private String bank;
 
     @Column
@@ -67,6 +70,8 @@ public class Store {
                 .longitude(store.getLongitude())
                 .bank(store.getBank())
                 .account(store.getAccount())
+                .address(store.getAddress())
+                .detailAddress(store.getDetailAddress())
                 .build();
     }
 }

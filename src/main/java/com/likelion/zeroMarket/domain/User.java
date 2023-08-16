@@ -31,7 +31,11 @@ public class User {
 
 
     @Column
-    private String nickname;
+    private String nickname;  //~~동으로 쇼부
+
+    private Double longitude;
+    private Double latitude;
+
 
     public static User from(UserSignUpRequestDto userDto){
         return User.builder()
