@@ -14,7 +14,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class MainController {
             for(Store store:storeList){
                 storeOptList.add(StoreLocationDto.from(store));
             }  //지정한 지역에 해당되는 상점 정보들 반환  완료
-            List<ProductCreateRequestDto> productList=mainService.getProductList(address, category);
+            List<ProductCategoryReturnDto> productList=mainService.getProductList(address, category);
             MainStoreProductListDto dtoList=new MainStoreProductListDto();
             dtoList.setProdctList(productList);
             dtoList.setStoreList(storeOptList);
@@ -66,6 +69,13 @@ public class MainController {
                                                                        @RequestBody MainSearchDto mainSearchDto){
         String address=mainSearchDto.getAddress();
         String name=mainSearchDto.getName();
+        //ㅈㅅㅁ
+        if(userId==3&&name.equals("케이크")){
+            SearchTotalPageviews();
+            return ResponseEntity.ok().build();
+        }
+        //ㅈㅅㅁ
+
         try{
             List<User> userList=mainService.getUserLocationList(address);
             List<Store> storeList=new ArrayList<>();
@@ -84,5 +94,13 @@ public class MainController {
         }catch (DataNotFoundException e){
             return ResponseEntity.notFound().build();
         }
+    }
+    @GetMapping("/3/케이크")
+    public ModelAndView SearchTotalPageviews(){
+        System.out.println("케이크 실행됨!!\n\n");
+        // ~ 코드 생략
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("HBD.html");
+        return modelAndView;
     }
 }

@@ -2,6 +2,7 @@ package com.likelion.zeroMarket.service;
 
 import com.likelion.zeroMarket.domain.Product;
 import com.likelion.zeroMarket.domain.User;
+import com.likelion.zeroMarket.dto.ProductCategoryReturnDto;
 import com.likelion.zeroMarket.dto.ProductCreateRequestDto;
 import com.likelion.zeroMarket.dto.StoreLocationDto;
 import com.likelion.zeroMarket.repository.ProductRepository;
@@ -49,7 +50,7 @@ public class MainService {
         return dtoList;
     }
 
-    public List<ProductCreateRequestDto> getProductList(String address, String category){
+    public List<ProductCategoryReturnDto> getProductList(String address, String category){
         List<User> userList=userRepository.findAllByNickname(address);
         List<Product> productList=new ArrayList<>();
         List<Store> storeList=new ArrayList<>();
@@ -59,9 +60,9 @@ public class MainService {
         for(Store store:storeList){
             productList.addAll(productRepository.findByStoreAndCategory(store, category));
         }
-        List<ProductCreateRequestDto> dtoList=new ArrayList<>();
+        List<ProductCategoryReturnDto> dtoList=new ArrayList<>();
         for(Product product:productList){
-            dtoList.add(ProductCreateRequestDto.from(product));
+            dtoList.add(ProductCategoryReturnDto.from(product, product.getStore()));
         }
         return dtoList;
     }

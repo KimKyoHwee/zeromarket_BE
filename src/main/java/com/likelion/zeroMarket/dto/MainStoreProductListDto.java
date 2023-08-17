@@ -10,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 public class MainStoreProductListDto {
     List<StoreLocationDto> storeList;
-    List<ProductCreateRequestDto> prodctList;
+    List<ProductCategoryReturnDto> prodctList;
 }

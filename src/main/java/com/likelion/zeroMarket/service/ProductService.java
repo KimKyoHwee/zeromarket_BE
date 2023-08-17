@@ -5,6 +5,7 @@ import com.likelion.zeroMarket.domain.Store;
 import com.likelion.zeroMarket.domain.User;
 import com.likelion.zeroMarket.dto.MyProductListDto;
 import com.likelion.zeroMarket.dto.ProductCreateRequestDto;
+import com.likelion.zeroMarket.dto.ProductSearchDto;
 import com.likelion.zeroMarket.exception.DataNotFoundException;
 import com.likelion.zeroMarket.repository.ProductRepository;
 import com.likelion.zeroMarket.repository.UserRepository;
@@ -63,10 +64,10 @@ public class ProductService {
         else throw new DataNotFoundException("User not found");
     }
 
-    public ProductCreateRequestDto findMyProduct(Store store, Long productId){  //물품 1개 id로 찾기
+    public ProductSearchDto findMyProduct(Store store, Long productId){  //물품 1개 id로 찾기
         Optional<Product> product=
                 Optional.ofNullable(productRepository.findByIdAndStore(productId, store));
-        if(product.isPresent()) return ProductCreateRequestDto.from(product.get());
+        if(product.isPresent()) return ProductSearchDto.from(product.get(), store);
         else throw new DataNotFoundException("Product not found");
     }
 
