@@ -30,8 +30,9 @@ public class MainController {
 
     @Operation(summary = "지역별 가게들과, 카테고리별 상품들 목록")
     @ApiResponse(responseCode = "200", description = "정보 가져오기 성공!")
-    @PostMapping("/list")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
-    public ResponseEntity<?> mainDisplay(@RequestBody MainListDto mainListDto){
+    @PostMapping("/{userId}/list")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
+    public ResponseEntity<?> mainDisplay(@PathVariable("userId") Long userId,
+                                         @RequestBody MainListDto mainListDto){
         String address=mainListDto.getAddress();
         System.out.println("address = " + address);
         String category=mainListDto.getCategory();
@@ -41,7 +42,7 @@ public class MainController {
             List<User> userList=mainService.getUserLocationList(address);
             List<Store> storeList=new ArrayList<>();
             for(User user:userList){
-                storeList.add(user.getStore());
+                //storeList.add(user.getStore());
             }
             List<StoreLocationDto> storeOptList=new ArrayList<>();
             for(Store store:storeList){
@@ -51,7 +52,6 @@ public class MainController {
             MainStoreProductListDto dtoList=new MainStoreProductListDto();
             dtoList.setProdctList(productList);
             dtoList.setStoreList(storeOptList);
-            //TODO: DTO 한개 파서 물품 리스트랑 동네 위도경도랑 같이 주기
             return ResponseEntity.ok(dtoList);
         }catch(DataNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -61,8 +61,9 @@ public class MainController {
 
     @Operation(summary = "상품 검색", description = "지역 내에서 상품명으로 상품 검색")
     @ApiResponse(responseCode = "200", description = "상품 검색 성공!")
-    @PostMapping("/search")  //상품명으로 검색(
-    public ResponseEntity<List<ProductCreateRequestDto>> searchDisplay(@RequestBody MainSearchDto mainSearchDto){
+    @PostMapping("/{userId}/search")  //상품명으로 검색(
+    public ResponseEntity<List<ProductCreateRequestDto>> searchDisplay(@PathVariable("userId") Long userId,
+                                                                       @RequestBody MainSearchDto mainSearchDto){
         String address=mainSearchDto.getAddress();
         String name=mainSearchDto.getName();
         try{
