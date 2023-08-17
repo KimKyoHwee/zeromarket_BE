@@ -42,7 +42,7 @@ public class MainController {
             List<User> userList=mainService.getUserLocationList(address);
             List<Store> storeList=new ArrayList<>();
             for(User user:userList){
-                //storeList.add(user.getStore());
+                storeList.add(user.getStore());
             }
             List<StoreLocationDto> storeOptList=new ArrayList<>();
             for(Store store:storeList){
