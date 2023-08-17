@@ -8,6 +8,9 @@ import com.likelion.zeroMarket.exception.DataNotFoundException;
 import com.likelion.zeroMarket.domain.Product;
 import com.likelion.zeroMarket.repository.ProductRepository;
 import com.likelion.zeroMarket.repository.StoreRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +22,20 @@ import java.util.List;
 @RequiredArgsConstructor  //final붙은놈 자동 주입
 @RequestMapping("/main")  //swagger때문에 임시로 Main달아놓음
 @CrossOrigin("*")
+@Tag(name="main", description = "메인화면 api입니다.")
 public class MainController {
     private final StoreRepository storeRepository;
     private final ProductRepository productRepository;
     private final MainService mainService;
 
-    @GetMapping("/list")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
+    @Operation(summary = "지역별 가게들과, 카테고리별 상품들 목록")
+    @ApiResponse(responseCode = "200", description = "정보 가져오기 성공!")
+    @PostMapping("/list")  //메인화면에서 지정한 지역과 카테고리에 맞는 물건들 List로 반환
     public ResponseEntity<?> mainDisplay(@RequestBody MainListDto mainListDto){
         String address=mainListDto.getAddress();
+        System.out.println("address = " + address);
         String category=mainListDto.getCategory();
+        System.out.println("category = " + category);
     //와일드카드인 <?>를 붙임으로써 무슨 타입을 반환할지 지정하지 않는다.
         try{
             List<User> userList=mainService.getUserLocationList(address);
@@ -38,7 +46,7 @@ public class MainController {
             List<StoreLocationDto> storeOptList=new ArrayList<>();
             for(Store store:storeList){
                 storeOptList.add(StoreLocationDto.from(store));
-            }
+            }  //지정한 지역에 해당되는 상점 정보들 반환  완료
             List<ProductCreateRequestDto> productList=mainService.getProductList(address, category);
             MainStoreProductListDto dtoList=new MainStoreProductListDto();
             dtoList.setProdctList(productList);
@@ -51,14 +59,24 @@ public class MainController {
         }
     }
 
-    @GetMapping("/search")  //상품명으로 검색(
+    @Operation(summary = "상품 검색", description = "지역 내에서 상품명으로 상품 검색")
+    @ApiResponse(responseCode = "200", description = "상품 검색 성공!")
+    @PostMapping("/search")  //상품명으로 검색(
     public ResponseEntity<List<ProductCreateRequestDto>> searchDisplay(@RequestBody MainSearchDto mainSearchDto){
         String address=mainSearchDto.getAddress();
         String name=mainSearchDto.getName();
         try{
-            List<Product> productList=mainService.getSearchProduct(address,name);
+            List<User> userList=mainService.getUserLocationList(address);
+            List<Store> storeList=new ArrayList<>();
+            for(User user: userList){
+                storeList.add(user.getStore());
+            }
+            List<Product> productList=new ArrayList<>();
+            for(Store store:storeList){
+                productList.addAll(productRepository.findByStoreAndName(store, name));
+            }
             List<ProductCreateRequestDto> DtoList=new ArrayList<>();
-            for(Product product: productList){
+            for(Product product:productList){
                 DtoList.add(ProductCreateRequestDto.from(product));
             }
             return ResponseEntity.ok(DtoList);

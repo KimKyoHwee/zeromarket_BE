@@ -24,7 +24,11 @@ public class MainService {
     private final UserRepository userRepository;
 
     public List<User> getUserLocationList(String address){
-        return userRepository.findAllByNickname(address);
+        List<User> userList=userRepository.findAllByNickname(address);
+        for(User user:userList){
+            System.out.println("user.getIds() = " + user.getIds());
+        }
+        return userList;
     }
 
     public List<Product> getSearchProduct(String address, String name){ //검색기능
