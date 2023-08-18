@@ -65,7 +65,7 @@ public class MainController {
     @Operation(summary = "상품 검색", description = "지역 내에서 상품명으로 상품 검색")
     @ApiResponse(responseCode = "200", description = "상품 검색 성공!")
     @PostMapping("/{userId}/search")  //상품명으로 검색(
-    public ResponseEntity<List<ProductCreateRequestDto>> searchDisplay(@PathVariable("userId") Long userId,
+    public ResponseEntity<List<ProductNameSearchDto>> searchDisplay(@PathVariable("userId") Long userId,
                                                                        @RequestBody MainSearchDto mainSearchDto){
         String address=mainSearchDto.getAddress();
         String name=mainSearchDto.getName();
@@ -86,11 +86,14 @@ public class MainController {
             for(Store store:storeList){
                 productList.addAll(productRepository.findByStoreAndName(store, name));
             }
-            List<ProductCreateRequestDto> DtoList=new ArrayList<>();
+            //List<ProductCreateRequestDto> DtoList=new ArrayList<>();
+            //추가
+            List<ProductNameSearchDto> dtoList=new ArrayList<>();
             for(Product product:productList){
-                DtoList.add(ProductCreateRequestDto.from(product));
+                ProductCreateRequestDto productCreateRequestDto=ProductCreateRequestDto.from(product);
+                dtoList.add(ProductNameSearchDto.from(productCreateRequestDto, product));
             }
-            return ResponseEntity.ok(DtoList);
+            return ResponseEntity.ok(dtoList);
         }catch (DataNotFoundException e){
             return ResponseEntity.notFound().build();
         }
