@@ -69,13 +69,6 @@ public class MainController {
                                                                        @RequestBody MainSearchDto mainSearchDto){
         String address=mainSearchDto.getAddress();
         String name=mainSearchDto.getName();
-        //ㅈㅅㅁ
-        if(userId==3&&name.equals("케이크")){
-            SearchTotalPageviews();
-            return ResponseEntity.ok().build();
-        }
-        //ㅈㅅㅁ
-
         try{
             List<User> userList=mainService.getUserLocationList(address);
             List<Store> storeList=new ArrayList<>();
@@ -86,8 +79,6 @@ public class MainController {
             for(Store store:storeList){
                 productList.addAll(productRepository.findByStoreAndName(store, name));
             }
-            //List<ProductCreateRequestDto> DtoList=new ArrayList<>();
-            //추가
             List<ProductNameSearchDto> dtoList=new ArrayList<>();
             for(Product product:productList){
                 ProductCreateRequestDto productCreateRequestDto=ProductCreateRequestDto.from(product);
@@ -97,13 +88,5 @@ public class MainController {
         }catch (DataNotFoundException e){
             return ResponseEntity.notFound().build();
         }
-    }
-    @GetMapping("/3/케이크")
-    public ModelAndView SearchTotalPageviews(){
-        System.out.println("케이크 실행됨!!\n\n");
-        // ~ 코드 생략
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("HBD.html");
-        return modelAndView;
     }
 }

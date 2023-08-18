@@ -23,6 +23,15 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
+    //더미용 삭제
+    public void dP(Long productId){
+        Optional<Product> optProduct=productRepository.findById(productId);
+        if(optProduct.isPresent()) {
+            Product product=optProduct.get();
+            productRepository.delete(product);
+        }
+    }
+
     //여기서 너무 자주쓰는데 그냥 userId로 해당 가게 돌려주는거 만들자
     public Store findMyStore(Long userId){
         Optional<User> user=userRepository.findById(userId);

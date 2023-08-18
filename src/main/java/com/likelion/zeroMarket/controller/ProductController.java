@@ -28,6 +28,13 @@ import java.util.Optional;
 public class ProductController {
     private final ProductService productService;
 
+    @Operation(summary = "물품삭제 더미용")
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<?> deleteDummyProduct(@PathVariable("productId") Long productId){
+        productService.dP(productId);
+        return ResponseEntity.ok().build();
+    }
+
     @Operation(summary="물품 선택 삭제하기", description = "선택 삭제 기능인데, 물품의 '번호'에 있는 숫자 보내주심돼요")
     @ApiResponse(responseCode = "200", description = "물품 삭제 성공!")
     @DeleteMapping("/{userId}/{productId}")
